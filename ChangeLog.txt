@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 R3 (master, mike fork):
 Changes:
 	- Grid movement
@@ -7,6 +8,8 @@ TODO:
 	- Combat logic and shit
 	- Other shit
 
+=======
+>>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
 R2 (master):
 Changes:
 	- Keyboard input functionality added
