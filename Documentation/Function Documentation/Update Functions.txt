@@ -1,0 +1,7 @@
+addUnit(u)
+	Parameters
+		u
+			Type: Unit Object
+			Description: Unit to be added to unitList
+	Description
+		Adds 'u' to 'unitList'

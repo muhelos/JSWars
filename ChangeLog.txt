@@ -1,0 +1,23 @@
+R3 (master, mike fork):
+Changes:
+	- Grid movement
+TODO:
+	- Get basic art assets going
+	- Control over more than one object
+	- Combat logic and shit
+	- Other shit
+
+R2 (master):
+Changes:
+	- Keyboard input functionality added
+TODO:
+	- Grid system
+	- Get basic art assets going
+	- Control over more than one object
+
+R1 (master):
+Changes:
+	- Initial data structures for storing unit states & drawing have been begun
+TODO:
+	- Grid system
+	- Arrow Key Movement

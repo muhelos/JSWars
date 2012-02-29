@@ -1,0 +1,24 @@
+Simple "Advance Wars" style game
+==USING MVC==
+- Needs to be able to draw the game (View)
+	- Board
+	- Units
+- Needs to be able to accept input & do shit with it (Controller)
+	- User Input
+		- Arrow Keys
+		- Clicks
+	- Game Logic
+		- Movement of units
+			- Pathfinding
+			- Legal move limit
+		- Combat
+			- Outcomes
+			- Logic (Range, Type, etc)
+- Needs to be able to store game state (Model)
+	- Unit states
+		- Location
+		- Health
+		- Sprite
+			- Draw? Boolean
+	- Map states
+		- Individual square details, etc
