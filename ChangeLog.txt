@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+R3 (master, mike fork):
+Changes:
+	- Grid movement
+TODO:
+	- Get basic art assets going
+	- Control over more than one object
+	- Combat logic and shit
+	- Other shit
+
+=======
+>>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
 R2 (master):
 Changes:
 	- Keyboard input functionality added

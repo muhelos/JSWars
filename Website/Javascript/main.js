@@ -3,6 +3,11 @@ var _buffer = null;
 var canvas = null; //AKA: Context
 var buffer = null; //AKA: Buffer Context
 
+<<<<<<< HEAD
+var gridPixel = 32;
+
+=======
+>>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
 function Game()
 {
     this.gameLoop = null;
@@ -116,6 +121,21 @@ window.addEventListener('keydown', function(event)
 	switch (event.keyCode) 
 	{
 		case 37: // Left
+<<<<<<< HEAD
+			unitList[0].gridMove(-1,0);
+			break;
+
+		case 38: // Up
+			unitList[0].gridMove(0,-1);
+			break;
+
+		case 39: // Right
+			unitList[0].gridMove(1,0);
+			break;
+
+		case 40: // Down
+			unitList[0].gridMove(0,1);
+=======
 			unitList[0].move(-20,0);
 			break;
 
@@ -129,6 +149,7 @@ window.addEventListener('keydown', function(event)
 
 		case 40: // Down
 			unitList[0].move(0,20);
+>>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
 			break;
 	}
 }, false);
@@ -147,4 +168,13 @@ function Unit(xc, yc, hp, sprt, drw)
 		this.x+=xdelt;
 		this.y+=ydelt;
 	}
+<<<<<<< HEAD
+	
+	this.gridMove = function(xdelt, ydelt)
+	{
+		this.x+=xdelt*gridPixel;
+		this.y+=ydelt*gridPixel;
+	}
+=======
+>>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
 }
