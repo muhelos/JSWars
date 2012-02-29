@@ -1,3 +1,11 @@
+R2 (master):
+Changes:
+	- Keyboard input functionality added
+TODO:
+	- Grid system
+	- Get basic art assets going
+	- Control over more than one object
+
 R1 (master):
 Changes:
 	- Initial data structures for storing unit states & drawing have been begun

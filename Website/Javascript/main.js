@@ -110,12 +110,41 @@ function addImage(fname)
 	imageList = imageList.concat([temp]);
 }
 
-//Classes
-function Unit(x, y, hp, sprt, drw)
+//Input
+window.addEventListener('keydown', function(event) 
 {
-	this.x = x;
-	this.y = y;
+	switch (event.keyCode) 
+	{
+		case 37: // Left
+			unitList[0].move(-20,0);
+			break;
+
+		case 38: // Up
+			unitList[0].move(0,-20);
+			break;
+
+		case 39: // Right
+			unitList[0].move(20,0);
+			break;
+
+		case 40: // Down
+			unitList[0].move(0,20);
+			break;
+	}
+}, false);
+
+//Classes
+function Unit(xc, yc, hp, sprt, drw)
+{
+	this.x = xc;
+	this.y = yc;
 	this.health = hp;
 	this.sprite = sprt;
 	this.draw = drw;
+	
+	this.move = function(xdelt, ydelt)
+	{
+		this.x+=xdelt;
+		this.y+=ydelt;
+	}
 }

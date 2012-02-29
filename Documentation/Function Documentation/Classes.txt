@@ -9,3 +9,8 @@ Unit
 		health: Heath of unit
 		sprite: Index of imageList that contains the actual image
 		draw: Boolean determining if drawSprites() will draw it
+	Functions
+		move(xdelt, ydelt)
+			Parameters
+				xdelt: The x delta for movement
+				ydelt: The y delta for movement
