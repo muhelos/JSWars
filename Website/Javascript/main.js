@@ -3,11 +3,9 @@ var _buffer = null;
 var canvas = null; //AKA: Context
 var buffer = null; //AKA: Buffer Context
 
-<<<<<<< HEAD
+
 var gridPixel = 32;
 
-=======
->>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
 function Game()
 {
     this.gameLoop = null;
@@ -34,7 +32,7 @@ function Game()
     
     this.Run = function()
 	{
-		addUnit(new Unit(30,50,10,0,true));
+		addUnit(new Unit(0,0,10,0,true));
         if(canvas != null)
 		{
             self.gameLoop = setInterval(self.Loop, 50);
@@ -92,6 +90,9 @@ function drawToBuffer()
 
 function drawBackground()
 {
+	buffer.strokeStyle = "rgb(255, 255, 255)";
+    buffer.fillStyle = "rgb(255, 255, 255)";
+	buffer.fillRect(0,0,_buffer.width,_buffer.height) ;
 }
 
 function drawSprites()
@@ -121,35 +122,19 @@ window.addEventListener('keydown', function(event)
 	switch (event.keyCode) 
 	{
 		case 37: // Left
-<<<<<<< HEAD
-			unitList[0].gridMove(-1,0);
+			unitList[0].playerMove(-1,0);
 			break;
 
 		case 38: // Up
-			unitList[0].gridMove(0,-1);
+			unitList[0].playerMove(0,-1);
 			break;
 
 		case 39: // Right
-			unitList[0].gridMove(1,0);
+			unitList[0].playerMove(1,0);
 			break;
 
 		case 40: // Down
-			unitList[0].gridMove(0,1);
-=======
-			unitList[0].move(-20,0);
-			break;
-
-		case 38: // Up
-			unitList[0].move(0,-20);
-			break;
-
-		case 39: // Right
-			unitList[0].move(20,0);
-			break;
-
-		case 40: // Down
-			unitList[0].move(0,20);
->>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
+			unitList[0].playerMove(0,1);
 			break;
 	}
 }, false);
@@ -163,18 +148,35 @@ function Unit(xc, yc, hp, sprt, drw)
 	this.sprite = sprt;
 	this.draw = drw;
 	
-	this.move = function(xdelt, ydelt)
+	this.moveRelative = function(xdelt, ydelt)
 	{
 		this.x+=xdelt;
 		this.y+=ydelt;
 	}
-<<<<<<< HEAD
 	
-	this.gridMove = function(xdelt, ydelt)
+	this.gridMoveRelative = function(xdelt, ydelt)
 	{
-		this.x+=xdelt*gridPixel;
-		this.y+=ydelt*gridPixel;
+		this.moveRelative(xdelt*gridPixel,ydelt*gridPixel);
 	}
-=======
->>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
+	
+	this.moveAbsolute = function(xdelt, ydelt)
+	{
+		this.x=xdelt;
+		this.y=ydelt;
+	}
+	
+	this.gridMoveAbsolute = function(xdelt, ydelt)
+	{
+		this.moveAbsolute(this.x+xdelt,this.y+ydelt);
+	} 
+	
+	this.playerMove = function(xdelt, ydelt)
+	{
+		var tempx = this.x+xdelt*gridPixel;
+		var tempy = this.y+ydelt*gridPixel;
+		if (tempx >= 0 && tempy >= 0 && tempx <_buffer.width && tempy < _buffer.height)
+		{
+			this.gridMoveRelative(xdelt,ydelt);
+		}
+	}
 }

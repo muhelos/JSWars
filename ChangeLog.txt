@@ -1,4 +1,13 @@
-<<<<<<< HEAD
+R4(master, mike fork):
+Bug Fixes:
+	- Player can't move out of canvas any more (because mike's a boss)
+TODO:
+	- Art assets
+	- Control over more than one object
+	- Add in unit addition automation function
+	- Combat logic and shit
+	- Other shit
+
 R3 (master, mike fork):
 Changes:
 	- Grid movement
@@ -8,8 +17,6 @@ TODO:
 	- Combat logic and shit
 	- Other shit
 
-=======
->>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
 R2 (master):
 Changes:
 	- Keyboard input functionality added
