@@ -1,0 +1,6 @@
+loadImages()
+	Parameters
+		None
+	Description
+		Iterates through imageFnameList and calls addImage() for each item in imageFnameList
+		

@@ -1,0 +1,26 @@
+drawToBuffer()
+	Parameters
+		None
+	Description
+		Calls drawBackground() & drawSprites()
+
+drawBackground()
+	Parameters
+		None
+	Description
+		Placeholder
+
+drawSprites()
+	Parameters
+		None
+	Description
+		Iterates through unitList & draws units that have draw set to true
+
+addImage()
+	Parameters
+		fname
+			Type: String
+			Description: Filename of Image to be added to imageList
+	Description
+		Loads and adds an image to a list of images that can be drawn
+	

@@ -3,9 +3,8 @@ var _buffer = null;
 var canvas = null; //AKA: Context
 var buffer = null; //AKA: Buffer Context
 
-var unitList = new Array();
-
-function Game(){
+function Game()
+{
     this.gameLoop = null;
     var self = this;
     
@@ -29,17 +28,16 @@ function Game(){
 	}
     
     this.Run = function()
-	{        
+	{
+		addUnit(new Unit(30,50,10,0,true));
         if(canvas != null)
 		{
             self.gameLoop = setInterval(self.Loop, 50);
         }
-            
     }
     
     this.Update = function()
 	{
-        // Update Objects
     }
     
     this.Draw = function()
@@ -58,11 +56,24 @@ function Game(){
         self.Draw();    
     }
 }
+//Vars Used Below This Line
+var unitList = new Array();
+
 //Loading functions
-var imageFnameList = new Array();
+var imageFnameList = ['square.png'];
 
 function loadImages()
 {
+	for(var i = 0; i < imageFnameList.length; i++)
+	{
+		addImage(imageFnameList[i]);
+	}
+}
+
+//Update functions
+function addUnit(u)
+{
+	unitList = unitList.concat([u]);
 }
 
 //Drawing functions & vars
@@ -72,16 +83,21 @@ function drawToBuffer()
 {
 	drawBackground();
 	drawSprites();
-	var imageObj = new Image();
-	imageObj.src = "Resources/Sprites/square.png";
-	buffer.drawImage(imageObj, 0, 0);
 }
 
 function drawBackground()
 {
+}
+
+function drawSprites()
+{
 	for(var i = 0; i < unitList.length; i++)
 	{
-		
+		var workingUnit = unitList[i];
+		if(workingUnit.draw)
+		{
+			buffer.drawImage(imageList[workingUnit.sprite], workingUnit.x, workingUnit.y);
+		}
 	}
 }
 
@@ -95,9 +111,9 @@ function addImage(fname)
 }
 
 //Classes
-function unit(x, y, hp, sprt, drw)
+function Unit(x, y, hp, sprt, drw)
 {
-	this.x = x; //X Coordinate
+	this.x = x;
 	this.y = y;
 	this.health = hp;
 	this.sprite = sprt;

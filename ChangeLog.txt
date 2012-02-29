@@ -1,0 +1,5 @@
+R1 (master):
+Changes:
+	- Initial data structures for storing unit states & drawing have been begun
+TODO:
+	- moveTo(x,y) function
