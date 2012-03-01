@@ -4,10 +4,6 @@ var canvas = null; //AKA: Context
 var buffer = null; //AKA: Buffer Context
 var showOccupiedSpaces = false;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> c59735b6b8cb9025ca894c8627a5d06603268cca
 var gridPixel = 32;
 
 function Game()
@@ -78,13 +74,73 @@ function loadImages()
 	}
 }
 
-//Update functions
+////Update functions
 function addUnit(u)
 {
 	unitList = unitList.concat([u]);
 }
+////Game Logic
+//Movement checking
+validMoveRelative = function(xdelt, ydelt)	// relative - input grid location not pixel location
+{
+	var tempx =this.gridXAdd(xdelt);
+	var tempy = this.gridYAdd(ydelt);
+	if (tempx >= 0 && tempy >= 0 &&  tempx <_buffer.width/gridPixel && tempy < _buffer.height/gridPixel)
+	{
+		if (!occupied(tempx, tempy))
+		{
+			return true;
+		}
+	}
+	return false;
+}
 
-//Drawing functions & vars
+setOccupied = function (x, y)
+{
+	occupiedgrid[occupiedArrayConvert(x,y)] = true;
+}
+
+setUnOccupied = function (x, y)
+{
+	occupiedgrid[occupiedArrayConvert(x,y)] = false;
+}
+
+occupied = function(x, y)	// absolute, input grid location not pixel location
+{
+	if (occupiedgrid[occupiedArrayConvert(x,y)] == true)
+	{
+		return true;
+	}
+	return false;
+}		
+
+occupiedRelative = function(xdelt, ydelt)	// relative, input grid location not pixel location
+{
+	if (occupiedgrid[occupiedArrayConvert(this.gridXAdd(xdelt), this.gridYAdd(ydelt))])
+	{
+		return true;
+	}
+	return false;
+}
+
+occupiedArrayConvert = function (x, y)
+{
+	return y*(_buffer.height/gridPixel) + x;
+} 
+	
+validMove = function(x, y)	// absolute - input grid location not pixel location
+{
+	if (x >= 0 && y >= 0 && x <_buffer.width/gridPixel && y < _buffer.height/gridPixel)
+	{
+		if (!occupied(x, y))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+////Drawing functions & vars
 var imageList = new Array();
 var showOccupied = false;
 
@@ -156,7 +212,7 @@ function addImage(fname)
 	imageList = imageList.concat([temp]);
 }
 
-//Input
+////Input
 window.addEventListener('keydown', function(event) 
 {
 	switch (event.keyCode) 
@@ -179,7 +235,7 @@ window.addEventListener('keydown', function(event)
 	}
 }, false);
 
-//Classes
+////Classes
 function Unit(xc, yc, hp, sprt, drw)
 {
 	this.x = xc;
@@ -195,31 +251,6 @@ function Unit(xc, yc, hp, sprt, drw)
 	}
 	
 	this.gridMoveRelative = function(xdelt, ydelt)
-<<<<<<< HEAD
-	{
-		this.moveRelative(xdelt*gridPixel,ydelt*gridPixel);
-	}
-	
-	this.moveAbsolute = function(xdelt, ydelt)
-	{
-		this.x=xdelt;
-		this.y=ydelt;
-	}
-	
-	this.gridMoveAbsolute = function(xdelt, ydelt)
-	{
-		this.moveAbsolute(this.x+xdelt,this.y+ydelt);
-	} 
-	
-	this.playerMove = function(xdelt, ydelt)
-	{
-		var tempx = this.x+xdelt*gridPixel;
-		var tempy = this.y+ydelt*gridPixel;
-		if (tempx >= 0 && tempy >= 0 && tempx <_buffer.width && tempy < _buffer.height)
-		{
-			this.gridMoveRelative(xdelt,ydelt);
-		}
-=======
 	{
 		this.moveRelative(xdelt*gridPixel,ydelt*gridPixel);
 	}
@@ -233,18 +264,6 @@ function Unit(xc, yc, hp, sprt, drw)
 	this.gridMoveAbsolute = function(xdelt, ydelt)
 	{
 		this.moveAbsolute(this.gridXAdd(xdelt),this.gridYAdd(ydelt));
-	} 
-	
-	validMove = function(x, y)	// absolute - input grid location not pixel location
-	{
-		if (x >= 0 && y >= 0 && x <_buffer.width/gridPixel && y < _buffer.height/gridPixel)
-		{
-			if (!occupied(x, y))
-			{
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	var occupiedgrid = new Array(_buffer.width*_buffer.height);
@@ -275,54 +294,5 @@ function Unit(xc, yc, hp, sprt, drw)
 	this.gridYAdd = function(ydelt)
 	{
 		return this.y/gridPixel + ydelt;
-	}
-
-	
-	validMoveRelative = function(xdelt, ydelt)	// relative - input grid location not pixel location
-	{
-		var tempx =this.gridXAdd(xdelt);
-		var tempy = this.gridYAdd(ydelt);
-		if (tempx >= 0 && tempy >= 0 &&  tempx <_buffer.width/gridPixel && tempy < _buffer.height/gridPixel)
-		{
-			if (!occupied(tempx, tempy))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	setOccupied = function (x, y)
-	{
-		occupiedgrid[occupiedArrayConvert(x,y)] = true;
-	}
-	
-	setUnOccupied = function (x, y)
-	{
-		occupiedgrid[occupiedArrayConvert(x,y)] = false;
-	}
-	
-	occupied = function(x, y)	// absolute, input grid location not pixel location
-	{
-		if (occupiedgrid[occupiedArrayConvert(x,y)] == true)
-		{
-			return true;
-		}
-		return false;
-	}		
-	
-	occupiedRelative = function(xdelt, ydelt)	// relative, input grid location not pixel location
-	{
-		if (occupiedgrid[occupiedArrayConvert(this.gridXAdd(xdelt), this.gridYAdd(ydelt))])
-		{
-			return true;
-		}
-		return false;
-	}
-	
-	occupiedArrayConvert = function (x, y)
-	{
-		return y*(_buffer.height/gridPixel) + x;
->>>>>>> c59735b6b8cb9025ca894c8627a5d06603268cca
 	}
 }
