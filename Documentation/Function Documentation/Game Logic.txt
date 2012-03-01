@@ -1,0 +1,27 @@
+function addUnit(u)
+	Parameters
+		- u is the unit to add
+	Description
+		- Adds it to unitList & sets its position
+		
+function moveUnit(u, prevgx, prevgy, gx, gy)
+	Parameters
+		 - u is the unit to move
+		 - prevgx, prevgy are the previous coordinates
+		 - gx, gy are the coordinates to move to
+	Description
+		 - Empties the square at prevgx, prevgy
+		 - Places u in gx, gy
+	 
+function setGridSquare(u, gx, gy)
+	Parameters
+		- u is the unit to be placed in the grid square
+		- gx, gy are the coordinates to place the unit in
+	Description
+		- Changes the array cell at gx, gy in unitGrid to u
+
+function emptyGridSquare(gx, gy)
+	Parameters
+		- gx, gy are the coordinates to empty
+	Description
+		- Changes the array cell at gx, gy to null

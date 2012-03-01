@@ -6,9 +6,12 @@ Unit
 	Attributes
 		x: X coordinate
 		y: Y coordinate
+		gx: Grid X coordinate
+		gy: Grid Y coordinate
 		health: Heath of unit
 		sprite: Index of imageList that contains the actual image
 		draw: Boolean determining if drawSprites() will draw it
+		solid: If it's solid, other units can not occupy its space
 	Functions
 		move(xdelt, ydelt)
 			Parameters

@@ -1,6 +1,6 @@
 ////Game Logic
 //Movement checking
-var occupiedgrid;
+var unitGrid;
 
 validMoveRelative = function(xdelt, ydelt)	// relative - input grid location not pixel location
 {
@@ -16,40 +16,25 @@ validMoveRelative = function(xdelt, ydelt)	// relative - input grid location not
 	return false;
 }
 
-setOccupied = function (x, y)
-{
-	occupiedgrid[occupiedArrayConvert(x,y)] = true;
-}
-
-setUnOccupied = function (x, y)
-{
-	occupiedgrid[occupiedArrayConvert(x,y)] = false;
-}
-
 occupied = function(x, y)	// absolute, input grid location not pixel location
 {
-	if (occupiedgrid[occupiedArrayConvert(x,y)] == true)
+	if (unitGrid[unitGridArrayConvert(x,y)] == undefined)
 	{
-		return true;
+		return false;
 	}
-	return false;
-}		
-
-occupiedRelative = function(xdelt, ydelt)	// relative, input grid location not pixel location
-{
-	if (occupiedgrid[occupiedArrayConvert(this.gridXAdd(xdelt), this.gridYAdd(ydelt))])
+	else if (unitGrid[unitGridArrayConvert(x,y)].solid == true)
 	{
 		return true;
 	}
 	return false;
 }
 
-occupiedArrayConvert = function (x, y)
+unitGridArrayConvert = function (x, y)
 {
 	return y*(_buffer.height/gridPixel) + x;
 } 
 	
-validMove = function(x, y)	// absolute - input grid location not pixel location
+validGridMove = function(x, y)	// absolute - input grid location not pixel location
 {
 	if (x >= 0 && y >= 0 && x <_buffer.width/gridPixel && y < _buffer.height/gridPixel)
 	{
@@ -59,4 +44,29 @@ validMove = function(x, y)	// absolute - input grid location not pixel location
 		}
 	}
 	return false;
+}
+
+////Unit manipulation functions
+function addUnit(u)
+{
+	unitList = unitList.concat([u]);
+	setGridSquare(u, u.gx, u.gy);
+}
+
+function moveUnit(u, prevgx, prevgy, gx, gy)
+//Moves the unit from (prevgx, prevgy) to (gx, gy)
+{
+	emptyGridSquare(prevgx, prevgy);
+	setGridSquare(u, gx, gy);
+}
+
+function setGridSquare(u, gx, gy)
+//This function and emptyGridSquare eventually need to deal with previously occupied squares
+{
+	unitGrid[unitGridArrayConvert(gx, gy)] = u;
+}
+
+function emptyGridSquare(gx, gy)
+{
+	unitGrid[unitGridArrayConvert(gx, gy)] = null;
 }

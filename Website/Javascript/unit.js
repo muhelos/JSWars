@@ -3,14 +3,19 @@ function Unit(xc, yc, hp, sprt, drw)
 {
 	this.x = xc;
 	this.y = yc;
+	this.gx = Math.round(this.x/gridPixel);
+	this.gy = Math.round(this.x/gridPixel);
 	this.health = hp;
 	this.sprite = sprt;
 	this.draw = drw;
+	this.solid = true;
 	
 	this.moveRelative = function(xdelt, ydelt)
 	{
 		this.x+=xdelt;
 		this.y+=ydelt;
+		this.gx = Math.round(this.gx+xdelt/gridPixel);
+		this.gy = Math.round(this.gy+ydelt/gridPixel);
 	}
 	
 	this.gridMoveRelative = function(xdelt, ydelt)
@@ -22,6 +27,8 @@ function Unit(xc, yc, hp, sprt, drw)
 	{
 		this.x=xdelt;
 		this.y=ydelt;
+		this.gx = Math.round(xdelt/gridPixel);
+		this.gy = Math.round(ydelt/gridPixel);
 	}
 	
 	this.gridMoveAbsolute = function(xdelt, ydelt)
@@ -29,15 +36,26 @@ function Unit(xc, yc, hp, sprt, drw)
 		this.moveAbsolute(this.gridXAdd(xdelt),this.gridYAdd(ydelt));
 	}
 	
-	this.playerMove = function(xdelt, ydelt) // relative e.g. (0,1) will go up 1 grid square
+	this.playerMove = function(gxdelt, gydelt) // relative e.g. (0,1) will go up 1 grid square
 	{
-		if (validMove(this.gridXAdd(xdelt), this.gridYAdd(ydelt)))		// check grid to see if legit							
+		if (validGridMove(this.gridXAdd(gxdelt), this.gridYAdd(gydelt)))		// check grid to see if legit							
 		{
-			setUnOccupied(this.gridX(),this.gridY());	//set old grid square unoccupied
-			setOccupied(this.gridXAdd(xdelt),this.gridYAdd(ydelt));
-			setOccupied(1,1);
-			this.gridMoveRelative(xdelt,ydelt);		
+			var tempgx = this.gx;
+			var tempgy = this.gy;
+			
+			this.gridMoveRelative(gxdelt,gydelt);
+			this.moveUnit(this, tempgx, tempgy, this.gx, this.gy);
 		}
+	}
+	
+	this.setSolid = function()
+	{
+		this.solid = true;
+	}
+	
+	this.setUnSolid = function()
+	{
+		this.solid = false;
 	}
 	
 	this.gridX = function()
