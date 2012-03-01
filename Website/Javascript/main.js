@@ -35,6 +35,7 @@ function Game()
     this.Run = function()
 	{
 		addUnit(new Unit(0,0,10,0,true));
+		addUnit(new Unit(32,32,10,0,true));
         if(canvas != null)
 		{
             self.gameLoop = setInterval(self.Loop, 50);

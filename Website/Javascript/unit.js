@@ -44,7 +44,7 @@ function Unit(xc, yc, hp, sprt, drw)
 			var tempgy = this.gy;
 			
 			this.gridMoveRelative(gxdelt,gydelt);
-			this.moveUnit(this, tempgx, tempgy, this.gx, this.gy);
+			moveUnit(this, tempgx, tempgy, this.gx, this.gy);
 		}
 	}
 	
