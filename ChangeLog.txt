@@ -1,4 +1,27 @@
-<<<<<<< HEAD
+R5(mike's awesome):
+	- Added validMove/validMoveRelative method, which checks the new location is in bounds and not occupied.
+	- Added occupied/occupiedRelative method, which checks the grid square is not occupied,
+	- occupiedgrid stores booleans in a 1d array representing whether a grid square is occupied. Updated in playerMove()
+		- Added occupiedArrayConvert method takes a (x,y) and returns the index of that element in the array
+	- Added setOccupied and setUnOccupied (x,y)
+	- Added functions gridX and gridY which get each units position on the grid, replaced a lot of "this.x/getPixel" shit.
+	- Added functions gridXAdd gridYAdd which is gridX or gridY plus the parameter, in hindsight this didn't help much.
+	- Added function drawOccupied() which will draw a red rectangle over any space that is occupied.
+	- Added a check box, and code that links it to whether to execute function drawOccupied().
+	- Currently an occupied space created at 1,1 to demonstrate.
+	
+	
+
+R4(master, mike fork):
+Bug Fixes:
+	- Player can't move out of canvas any more (because mike's a boss)
+TODO:
+	- Art assets
+	- Control over more than one object
+	- Add in unit addition automation function
+	- Combat logic and shit
+	- Other shit
+
 R3 (master, mike fork):
 Changes:
 	- Grid movement
@@ -8,8 +31,6 @@ TODO:
 	- Combat logic and shit
 	- Other shit
 
-=======
->>>>>>> 9aa00511aee9f7df80650fc59f43aa30e76def19
 R2 (master):
 Changes:
 	- Keyboard input functionality added
