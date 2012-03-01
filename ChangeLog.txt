@@ -1,3 +1,18 @@
+R6(master, dave fork):
+New Shit:
+	- Split code up into multiple files
+	- Added new array called "unitGrid," which holds units in their location on the grid
+	- Added new attributes to Unit
+		- gx - Grid X coord
+		- gy - Grid Y coord
+		- solid - true = unpassable, false = passable
+	- Modified moveRelative() & moveAbsolute() to update the gx and gy positions
+	- Modified playerMove() to move the unit around the board and in pixel space
+	- Whether or not something is occupied is now checked based upon the solid attribute
+	- Added a function addUnit(u)
+	- Added a function moveUnit(u, prevgx, prevgy, gx, gy)
+	- Added a function setGridSquare(u, gx, gy)
+
 R5(mike's awesome):
 	- Added validMove/validMoveRelative method, which checks the new location is in bounds and not occupied.
 	- Added occupied/occupiedRelative method, which checks the grid square is not occupied,
