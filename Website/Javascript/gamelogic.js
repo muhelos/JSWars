@@ -2,20 +2,56 @@
 //Movement checking
 var unitGrid;
 
-validMoveRelative = function(xdelt, ydelt)	// relative - input grid location not pixel location
+gridClicked = function(x, y)
 {
-	var tempx =this.gridXAdd(xdelt);
-	var tempy = this.gridYAdd(ydelt);
-	if (tempx >= 0 && tempy >= 0 &&  tempx <_buffer.width/gridPixel && tempy < _buffer.height/gridPixel)
+	if (yourTurn())
 	{
-		if (!occupied(tempx, tempy))
+		var clickedUnitIndex
+		var found;
+		findUnit:
+		for(var i = 0; i < unitList.length; i++)
 		{
-			return true;
+			var workingUnit = unitList[i];
+			if(workingUnit.clickable && workingUnit.x == x && workingUnit.y == y)
+			{
+				clickedUnitIndex = i;
+				found = true;
+				break findUnit;
+			}
+		}
+		if (found)
+		{
+			clickedUnit(clickedUnitIndex);
 		}
 	}
-	return false;
+	else if (addingUnit())
+	{
+		addUnit(new Unit(x, y, 10, 0, true));
+	}
 }
 
+setNoCurrent = function()
+{
+	findCurrent:
+	for(var i = 0; i < unitList.length; i++)
+	{
+		var workingUnit = unitList[i];
+		if (workingUnit.isCurrent())
+		{
+			unitList[i].setNotCurrent();
+			break findCurrent;
+		}
+	}
+	controlledUnit = null;
+}
+
+clickedUnit = function(i)
+{
+	if (controlledUnit != null)
+	{unitList[controlledUnit].setNotCurrent();}
+	controlledUnit = i;
+	unitList[controlledUnit].setCurrent();
+}
 occupied = function(x, y)	// absolute, input grid location not pixel location
 {
 	if (unitGrid[unitGridArrayConvert(x,y)] == undefined)
@@ -31,12 +67,12 @@ occupied = function(x, y)	// absolute, input grid location not pixel location
 
 unitGridArrayConvert = function (x, y)
 {
-	return y*(_buffer.height/gridPixel) + x;
+	return y*(maxX) + x;
 } 
 	
-validGridMove = function(x, y)	// absolute - input grid location not pixel location
+validMove = function(x, y)	// absolute - input grid location not pixel location
 {
-	if (x >= 0 && y >= 0 && x <_buffer.width/gridPixel && y < _buffer.height/gridPixel)
+	if (x >= 0 && y >= 0 && x < maxX && y < maxY)
 	{
 		if (!occupied(x, y))
 		{
@@ -50,23 +86,30 @@ validGridMove = function(x, y)	// absolute - input grid location not pixel locat
 function addUnit(u)
 {
 	unitList = unitList.concat([u]);
-	setGridSquare(u, u.gx, u.gy);
+	setGridSquare(u, u.x, u.y);
 }
 
-function moveUnit(u, prevgx, prevgy, gx, gy)
-//Moves the unit from (prevgx, prevgy) to (gx, gy)
+function moveUnit(u, x, y)
 {
-	emptyGridSquare(prevgx, prevgy);
-	setGridSquare(u, gx, gy);
+	emptyGridSquare(u.x, u.y);
+	setGridSquare(u, x, y);
+	u.moveAbsolute(x,y);
 }
 
-function setGridSquare(u, gx, gy)
+function moveUnitRelative(u, xdelt, ydelt)
+{
+	emptyGridSquare(u.x, u.y);
+	setGridSquare(u, u.x+xdelt, u.y+ydelt);
+	u.moveRelative(xdelt,ydelt);
+}
+
+function setGridSquare(u, x, y)
 //This function and emptyGridSquare eventually need to deal with previously occupied squares
 {
-	unitGrid[unitGridArrayConvert(gx, gy)] = u;
+	unitGrid[unitGridArrayConvert(x, y)] = u;
 }
 
-function emptyGridSquare(gx, gy)
+function emptyGridSquare(x, y)
 {
-	unitGrid[unitGridArrayConvert(gx, gy)] = null;
+	unitGrid[unitGridArrayConvert(x, y)] = null;
 }

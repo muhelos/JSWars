@@ -2,9 +2,18 @@ var _canvas;
 var _buffer;
 var canvas; //AKA: Context
 var buffer; //AKA: Buffer Context
-var showOccupiedSpaces = false;
+var showNotOccupied = false;
 
 var gridPixel = 32;
+var maxX;
+var maxY;
+var controlledUnit = null; //index
+var currentState;
+
+var gameState = {
+  YOURTURN: 	{value: 0, name: "Your Turn"}, 
+  ADDUNIT:	 	{value: 1, name: "Add Unit"}, 
+};
 
 function Game()
 {
@@ -28,14 +37,17 @@ function Game()
             buffer.fillStyle = "rgb(255, 255, 255)";
             buffer.font = "bold 25px sans-serif";
         }
-		unitGrid = new Array(_buffer.width/gridPixel*_buffer.height/gridPixel);
+		maxX = _buffer.width/gridPixel;
+		maxY = _buffer.height/gridPixel;
+		unitGrid = new Array(maxX, maxY);
 		loadImages();
 	}
     
     this.Run = function()
 	{
 		addUnit(new Unit(0,0,10,0,true));
-		addUnit(new Unit(32,32,10,0,true));
+		changeState(gameState.YOURTURN);
+		addUnit(new Unit(1,1,10,0,true));
         if(canvas != null)
 		{
             self.gameLoop = setInterval(self.Loop, 50);
@@ -62,11 +74,36 @@ function Game()
         self.Draw();    
     }
 }
+
+function changeState(newstate)
+{
+	if (currentState != newstate)
+	{
+		if (yourTurn())
+		{
+			setNoCurrent();
+		}
+		else if (addingUnit())
+		{
+			showNotOccupied = false;
+		}
+		currentState = newstate;
+		if (yourTurn())
+		{
+		
+		}
+		else if (addingUnit())
+		{
+			showNotOccupied = true;
+		}
+	}
+}
+	
 //Vars Used Below This Line
 var unitList = new Array();
 
 //Loading functions
-var imageFnameList = ['square.png'];
+var imageFnameList = ['square.png','highlightedsquare.png'];
 
 function loadImages()
 {
@@ -76,26 +113,103 @@ function loadImages()
 	}
 }
 
+yourTurn = function()
+{
+	if (currentState == gameState.YOURTURN)
+	{return true;}
+	return false;
+}
+addingUnit = function()
+{
+	if (currentState == gameState.ADDUNIT)
+	{return true;}
+	return false;
+}
 ////Input
 window.addEventListener('keydown', function(event) 
-{
-	switch (event.keyCode) 
+{	// USE TO FIND KEYCODES http://asquare.net/javascript/tests/KeyCode.html
+	if (yourTurn() && controlledUnit != null)
 	{
-		case 37: // Left
-			unitList[0].playerMove(-1,0);
-			break;
+		switch (event.keyCode)  // 
+		{
+			case 37: // Left
+				unitList[controlledUnit].playerMove(-1,0);
+				break;
 
-		case 38: // Up
-			unitList[0].playerMove(0,-1);
-			break;
+			case 38: // Up	
+				unitList[controlledUnit].playerMove(0,-1);
+				break;
 
-		case 39: // Right
-			unitList[0].playerMove(1,0);
-			break;
+			case 39: // Right
+				unitList[controlledUnit].playerMove(1,0);
+				break;
 
-		case 40: // Down
-			unitList[0].playerMove(0,1);
+			case 40: // Down
+				unitList[controlledUnit].playerMove(0,1);
+				break;
+			case 65: // a
+				if (controlledUnit < unitList.length-1) 
+				{controlledUnit++;}
+				break;
+			case 83: // s
+				if (controlledUnit > 0)
+				{controlledUnit--;}
+				break;
+			case 32: // space
+				changeState(gameState.ADDUNIT);
+				break;
+		}
+	}
+	else if (addingUnit())
+	{
+		switch (event.keyCode)  // 
+		{
+			case 32: // space
+			changeState(gameState.YOURTURN);
 			break;
+		}
 	}
 }, false);
 
+function findPos(obj)  // STOLEN http://www.quirksmode.org/js/findpos.html
+{
+	var curleft = curtop = 0;
+	if (obj.offsetParent) 
+	{
+		do 
+		{
+			curleft += obj.offsetLeft;
+			curtop += obj.offsetTop;
+		}	 while (obj = obj.offsetParent);
+	}
+	return [curleft,curtop];
+}
+
+window.addEventListener('mouseup', function(event)
+{
+	if (event.pageX == null)	// STOLEN http://unixpapa.com/js/mouse.html
+   {
+      // IE case
+      var d= (document.documentElement && 
+              document.documentElement.scrollLeft != null) ?
+             document.documentElement : document.body;
+      docX= event.clientX + d.scrollLeft;
+      docY= event.clientY + d.scrollTop;
+   }
+   else
+   {
+      // all other browsers
+      docX= event.pageX;
+      docY= event.pageY;
+   }
+										// END STOLEN
+   var elemPos = findPos(document.getElementById('canvas'));
+   mousex = docX - elemPos[0];		//Where the mouse was clicked relative to canvas(0,0)
+   mousey = docY - elemPos[1];		//Same
+   handleMouseClick(mousex,mousey);
+ }, false);
+ 
+handleMouseClick = function(x, y)
+{;
+	gridClicked(Math.floor(x/gridPixel),Math.floor(y/gridPixel));
+}

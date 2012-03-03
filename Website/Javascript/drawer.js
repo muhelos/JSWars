@@ -6,9 +6,9 @@ function drawToBuffer()
 {
 	drawBackground();
 	drawSprites();
-	if (showOccupied)
+	if (showNotOccupied)
 	{
-		drawOccupied();
+		drawNotOccupied();
 	}
 }
 
@@ -26,22 +26,22 @@ function drawSprites()
 		var workingUnit = unitList[i];
 		if(workingUnit.draw)
 		{
-			buffer.drawImage(imageList[workingUnit.sprite], workingUnit.x, workingUnit.y);
+			buffer.drawImage(imageList[workingUnit.sprite], workingUnit.x*gridPixel, workingUnit.y*gridPixel);
 		}
 	}
 }
 
 
 
-function drawOccupied()
+function drawNotOccupied()
 {
-	for (var i = 0; i <_buffer.width/gridPixel; i++)
+	for (var i = 0; i < maxX; i++)
 	{
-		for (var j = 0; j <_buffer.height/gridPixel; j++)
+		for (var j = 0; j <maxY; j++)
 		{
-			if (occupied(i,j))
+			if (!occupied(i,j))
 			{
-				buffer.fillStyle = "red";
+				buffer.fillStyle = "blue";
 				buffer.fillRect(i*gridPixel, j*gridPixel, gridPixel, gridPixel);
 			}
 		}
@@ -53,11 +53,11 @@ function check(ctrl)
 	//get the state of the check box
 	if (ctrl.checked == true) 
 	{
-		showOccupied = true;
+		showNotOccupied = true;
 	}
 	else
 	{
-		showOccupied = false;
+		showNotOccupied = false;
 	}
 }
 

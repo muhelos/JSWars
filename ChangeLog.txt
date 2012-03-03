@@ -1,3 +1,57 @@
+R7(And what?):
+All sorts of shit up in here:
+	!!!!!!Basically every single x,y you will see in any file is grid based. Even the drawer doesn't make a variable for a unit's x,y pixel position!!!!!!! #alwaysrememberthis
+	addUnit to 1,1 rather than 32,32 //because of above
+	deleted gx,gy from unit. x and y becoming grid based. Pixel value shouldn't be used.
+	renamed moverelative to movepixelrelative //gets deleted in R7
+	gridmoverelative to moverelative
+	same with absolute versions of those.
+	renamed validgridmove to validmove
+	made playerMove tidier
+	moveUnit in playerMove changed to moveUnitRelative 
+	//need to make that function. #DONE
+	moved validMoveRelative from gamelogic to unit. It wouldn't of worked if used it was used.
+	drawSprites to * (x,y) of unit by gridpixel
+	changed addunit,moveunit,setgridsquare,emptygridsquare a bit.
+	moveunitrelative added. now calls the function IN the unit to move the units x,y position.
+	Same with moveunit. 
+	Added playerMoveAbsolute.
+	deleting movepixelrelative - it's stupid. should only move by grid.
+	deletingmovepixelabsolute - it's even more stupid. Somehow.
+	added maxX and maxY variables which are set depending on size of canvas. makes some code easier to read and enables rectangular grid.
+	can change moveable unit now. variable controlledUnit = 0, increased by 'a' and decreased by 's'. Stays within bounds of unitList.length. 
+	can change moveable unit by clicking on it. I'm fucking amazing.
+	added event listener for mouseup. The stolen part gets docx and docy which are the document coords of mouse click. the stolen function returns the position of an element (canvas). docx-elemx and docy-elemy give the coords relative to canvas.
+	handlemouseclick converts pixel square clicked to grid square clicked.
+	gridclicked finds the unit you clicked on from grid square clicked, if it exists and is clickable (added this bool to unit) calls clickedunit. #BREAKINGOUTOFANAMEDFORLOOPLIKEABOSS
+	clickedunit sets controlledunit to the index of clicked unit. Also sorts out setnotcurrent and setcurrent // if (isyourturn) or something could go here #IVEDEALTWITHTHIS
+	set
+	Current and setNotCurrent added to unit. changes a boolean added to unit appropriately and changes sprite.
+	Initial setCurrent is in Run function after adding the first unit. This is not legit.
+	Added gameState array with YOURTURN and ADDUNIT
+	changeState added 
+	setNoCurrent sets there to be no current option
+	showOccupied changed to showNotOccupied 
+	In ADDUNIT state blue is shown where units can be added.
+	click on a gridsquare to add a unit there
+	yourTurn() and addingUnit() return true if in that state for convenience
+	keyboard controls check state (no current controlled unit in addunit state, so would error hard)
+	
+	- Thought about making gridPixelx and gridPixely. To enable rectangular gridsquares. would involve changing sprite size depending on these values, which is long. Would make the grid system more awesome though if stolen for another game.
+		#don'tstealthatshit
+	- Thought about renaming moverelative/absolute to setxy or something, because it sets the x and y values, doesn't do anything else. Could be called by mistake thinking it does what playerMove does.
+		#what'syouropinion.
+	- Noticed EVERYTHING has relative and absolute versions. Although useful, it makes everything a bit less obvious/messy. We could stick to using one type only and delete the other, or continue as we are, or a third more badass option you need to think of.
+		#'what'syourbadassidea.
+	- Is there going to be impassable terrain? e.g. water. if so how will this be represented. Could make a class Thing() that has an int x int y bool solid. Unit would be a subclass of this.
+		#doesjavascriptimplementinheritance
+	- The mouse event registers when it's a mouseup event. This is different to mousedown and click. mousedown is obvious, click is only when both mouseup and mousedown happen in the same location.
+		#youonlyhavetoreleasethemouseonaunittoselectit
+	- What about undoing a move? To do this you'd need to store the last move made in a variable or something. Or write to some sort of log everytime an action is made, that idea sounds sort of cool. and could enable shit like replays which would be badman. Also unlimited move undoing.
+		#'badmanreplaysandwhat.
+		
+	
+
 R6(master, dave fork):
 New Shit:
 	- Split code up into multiple files
