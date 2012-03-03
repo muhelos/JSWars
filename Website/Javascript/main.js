@@ -169,6 +169,15 @@ window.addEventListener('keydown', function(event)
 			break;
 		}
 	}
+	else
+	{
+		switch (event.keyCode)  // 
+		{
+			case 32: // space
+			changeState(gameState.ADDUNIT);
+			break;
+		}
+	}
 }, false);
 
 function findPos(obj)  // STOLEN http://www.quirksmode.org/js/findpos.html

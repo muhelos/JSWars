@@ -26,7 +26,8 @@ gridClicked = function(x, y)
 	}
 	else if (addingUnit())
 	{
-		addUnit(new Unit(x, y, 10, 0, true));
+		if (!occupied(x,y))
+		{addUnit(new Unit(x, y, 10, 0, true));}
 	}
 }
 

@@ -1,3 +1,7 @@
+R8(Quick Fixes)
+	Changed some of the keyboard shit (you couldn't enter addunit state until you had selected something)
+	Checks !occupied before addingunit
+
 R7(And what?):
 All sorts of shit up in here:
 	!!!!!!Basically every single x,y you will see in any file is grid based. Even the drawer doesn't make a variable for a unit's x,y pixel position!!!!!!! #alwaysrememberthis
