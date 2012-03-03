@@ -3,49 +3,69 @@ function Unit(xc, yc, hp, sprt, drw)
 {
 	this.x = xc;
 	this.y = yc;
-	this.gx = Math.round(this.x/gridPixel);
-	this.gy = Math.round(this.x/gridPixel);
 	this.health = hp;
 	this.sprite = sprt;
 	this.draw = drw;
 	this.solid = true;
+	this.clickable = true;
+	this.current = false;
 	
-	this.moveRelative = function(xdelt, ydelt)
+	this.setCurrent = function()
 	{
-		this.x+=xdelt;
-		this.y+=ydelt;
-		this.gx = Math.round(this.gx+xdelt/gridPixel);
-		this.gy = Math.round(this.gy+ydelt/gridPixel);
+		this.current = true;
+		this.sprite = 1;
+	}
+	this.setNotCurrent = function()
+	{
+		this.current = false;
+		this.sprite = 0;
+	}
+	this.isCurrent = function()
+	{
+		return this.current;
 	}
 	
-	this.gridMoveRelative = function(xdelt, ydelt)
+	this.moveRelative = function(xdelt, ydelt)// called by moveunitrelative by playermove
 	{
-		this.moveRelative(xdelt*gridPixel,ydelt*gridPixel);
+		this.x += xdelt;
+		this.y += ydelt;
 	}
 	
-	this.moveAbsolute = function(xdelt, ydelt)
+	this.moveAbsolute = function(x, y) // called by moveunit by playermoveabsolute
 	{
-		this.x=xdelt;
-		this.y=ydelt;
-		this.gx = Math.round(xdelt/gridPixel);
-		this.gy = Math.round(ydelt/gridPixel);
+		this.x = x;
+		this.y = y;
 	}
 	
-	this.gridMoveAbsolute = function(xdelt, ydelt)
+	this.playerMove = function(xdelt, ydelt) // relative e.g. (0,1) will go up 1 grid square
 	{
-		this.moveAbsolute(this.gridXAdd(xdelt),this.gridYAdd(ydelt));
-	}
-	
-	this.playerMove = function(gxdelt, gydelt) // relative e.g. (0,1) will go up 1 grid square
-	{
-		if (validGridMove(this.gridXAdd(gxdelt), this.gridYAdd(gydelt)))		// check grid to see if legit							
-		{
-			var tempgx = this.gx;
-			var tempgy = this.gy;
-			
-			this.gridMoveRelative(gxdelt,gydelt);
-			moveUnit(this, tempgx, tempgy, this.gx, this.gy);
+		if (validMove(this.x + xdelt, this.y + ydelt)) // check grid to see if legit							
+		{	
+			moveUnitRelative(this, xdelt, ydelt);
+			// OR moveUnit(this,x+xdelt,y+ydelt);
 		}
+	}
+	
+	this.playerMoveAbsolute = function(x, y) // Absolute e.g. (0,1) will go up 1 grid square
+	{
+		if (validMove(x,y)) // check grid to see if legit							
+		{	
+			moveUnit(this, x, y);
+		}
+	}
+	
+	this.validMoveRelative = function(xdelt, ydelt)	// relative - input grid location not pixel location
+	{
+		var tempx =this.x + xdelt;
+		var tempy = this.y + ydelt;
+		if (tempx >= 0 && tempy >= 0 &&  tempx < maxX && tempy < maxY)
+		{
+			if (!occupied(tempx, tempy))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	this.setSolid = function()
@@ -56,22 +76,5 @@ function Unit(xc, yc, hp, sprt, drw)
 	this.setUnSolid = function()
 	{
 		this.solid = false;
-	}
-	
-	this.gridX = function()
-	{
-		return this.x/gridPixel;
-	}	
-	this.gridXAdd = function(xdelt)
-	{
-		return this.x/gridPixel + xdelt;
-	}
-	this.gridY = function()
-	{
-		return this.y/gridPixel;
-	}
-	this.gridYAdd = function(ydelt)
-	{
-		return this.y/gridPixel + ydelt;
 	}
 }
