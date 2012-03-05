@@ -1,6 +1,7 @@
 ////Game Logic
 //Movement checking
 var unitGrid;
+var unitMenu = null; //Menu to be drawn
 
 gridClicked = function(x, y)
 {
@@ -21,7 +22,15 @@ gridClicked = function(x, y)
 		}
 		if (found)
 		{
-			clickedUnit(clickedUnitIndex);
+			if(clickedUnitIndex == controlledUnit)
+			{
+				var workingUnit = unitList[controlledUnit];
+				unitMenu = new UnitMenu(workingUnit.x+1, workingUnit.y, true);
+				changeState(gameState.UNITMENUOPEN);
+				clickedUnit(clickedUnitIndex);
+			}
+			else
+			{clickedUnit(clickedUnitIndex);}
 		}
 	}
 	else if (addingUnit())
@@ -29,6 +38,44 @@ gridClicked = function(x, y)
 		if (!occupied(x,y))
 		{addUnit(new Unit(x, y, 10, 0, true));}
 	}
+	else if(unitMenuOpen())
+	{
+		changeState(gameState.YOURTURN);
+	}
+}
+
+menuClicked = function(x, y)
+//USES PIXEL SPACE
+{
+	if(x >= unitMenu.x*gridPixel && x <= (unitMenu.x*gridPixel)+unitMenu.width && y >= unitMenu.y*gridPixel && y <= (unitMenu.y*gridPixel)+unitMenu.height)
+	{
+		var workingOption = findMenuOption(x, y);
+		if(workingOption != null)
+		{
+			workingOption.action();
+		}
+	}
+	
+	else
+	{
+		changeState(gameState.YOURTURN);
+	}
+}
+
+findMenuOption = function(x, y)
+{
+	var ret = null;
+	var optionArray = unitMenu.options;
+	for(var i = 0; i < optionArray.length; i++)
+	{
+		var workingOption = optionArray[i];
+		if(x >= workingOption.x && x <= workingOption.x+workingOption.width && y >= workingOption.y && y <= workingOption.y+workingOption.height)
+		{
+			ret = workingOption;
+			break;
+		}
+	}
+	return ret;
 }
 
 setNoCurrent = function()

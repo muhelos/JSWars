@@ -6,6 +6,7 @@ function Unit(xc, yc, hp, sprt, drw)
 	this.health = hp;
 	this.sprite = sprt;
 	this.draw = drw;
+	this.speed = 5; //How many spaces it can move per turn
 	this.solid = true;
 	this.clickable = true;
 	this.current = false;

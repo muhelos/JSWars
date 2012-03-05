@@ -1,3 +1,25 @@
+R9(master, David's Branch, Codename: #ComeAtMeBro)
+		New gameState, MENUOPEN.  This is the gamestate if you click on the object that is already clicked.  It opens a menu just like in advance wars.
+		New class, UnitMenu.  This is a class containing information about menus that are drawn on the screen.
+			X & Y grid position to draw it in (although this could (and probably should) have the option of drawing it in sub-grid space)
+			Booleans to control which options are available
+		New draw function: drawUnitMenu().  This draws the current UnitMenu
+		New var in drawer.js: drawUnitMenu.  This is a boolean controlling if a UnitMenu is being drawn
+		New var in drawer.js: unitMenu.  This is the UnitMenu that's being drawn (if there is one)
+		New function in main.js: unitMenuOpen().  Returns true if the current state is UNITMENUOPEN
+		I added a few other things also.  Not sure what, but nothing huge huge
+		New class, menuoption, which contains the x, y, width, and height of a menu item, and its function.
+		New function in gamelogic.js: menuClicked().  Tests to see if a menu option was clicked.
+		Modified handleMouseClick() to support menu clicking
+		New function in gamelogic.js: findMenuOption().  Returns the menu option object at (x, y)
+		New function in unitmenu.js: menuOption.action(): Does whatever action the menu option is supposed to do
+		Added new attribute, speed, to unit.  This controls the number of spaces it can move per turn
+	TODO:
+		Pathfinding
+		Maximum move distance display
+		Combat
+	
+
 R8(Quick Fixes)
 	Changed some of the keyboard shit (you couldn't enter addunit state until you had selected something)
 	Checks !occupied before addingunit

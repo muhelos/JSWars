@@ -13,6 +13,7 @@ var currentState;
 var gameState = {
   YOURTURN: 	{value: 0, name: "Your Turn"}, 
   ADDUNIT:	 	{value: 1, name: "Add Unit"}, 
+  UNITMENUOPEN:  {value: 2, name: "Unit Menu Open"},
 };
 
 function Game()
@@ -125,6 +126,12 @@ addingUnit = function()
 	{return true;}
 	return false;
 }
+unitMenuOpen = function()
+{
+	if(currentState == gameState.UNITMENUOPEN)
+	{return true;}
+	return false;
+}
 ////Input
 window.addEventListener('keydown', function(event) 
 {	// USE TO FIND KEYCODES http://asquare.net/javascript/tests/KeyCode.html
@@ -219,6 +226,9 @@ window.addEventListener('mouseup', function(event)
  }, false);
  
 handleMouseClick = function(x, y)
-{;
-	gridClicked(Math.floor(x/gridPixel),Math.floor(y/gridPixel));
+{
+	if(unitMenuOpen())
+	{menuClicked(x, y);}
+	else
+	{gridClicked(Math.floor(x/gridPixel),Math.floor(y/gridPixel));}
 }

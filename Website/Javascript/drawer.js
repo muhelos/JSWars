@@ -10,6 +10,10 @@ function drawToBuffer()
 	{
 		drawNotOccupied();
 	}
+	if(unitMenuOpen())
+	{
+		drawUnitMenu();
+	}
 }
 
 function drawBackground()
@@ -31,7 +35,20 @@ function drawSprites()
 	}
 }
 
-
+function drawUnitMenu()
+{
+	buffer.fillStyle = "rgb(0,0,255)";
+	buffer.fillRect(unitMenu.x*gridPixel, unitMenu.y*gridPixel, unitMenu.width, unitMenu.height); //Draw the menu
+	for(var i = 0; i < unitMenu.options.length; i++)
+	{
+		var workingOption = unitMenu.options[i];
+		buffer.fillStyle = "rgb(255,0,0)";
+		buffer.fillRect(workingOption.x, workingOption.y, workingOption.width, workingOption.height);
+		buffer.font="14px sans-serif";
+		buffer.fillStyle = "rgb(0,0,0)";
+		buffer.fillText(workingOption.text, workingOption.x, workingOption.y+workingOption.height-4, workingOption.width);
+	}
+}
 
 function drawNotOccupied()
 {
