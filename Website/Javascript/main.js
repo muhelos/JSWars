@@ -24,20 +24,20 @@ function Game()
     
     this.Init = function()
 	{
-        _canvas = document.getElementById('canvas');
-        if (_canvas && _canvas.getContext)
+		_canvas = document.getElementById('canvas');
+		if (_canvas && _canvas.getContext)
 		{
-            canvas = _canvas.getContext('2d');
-            
-            _buffer = document.createElement('canvas');
-            _buffer.width = _canvas.width;
-            _buffer.height = _canvas.height;
-            buffer = _buffer.getContext('2d');
-            
-            buffer.strokeStyle = "rgb(255, 255, 255)";
-            buffer.fillStyle = "rgb(255, 255, 255)";
-            buffer.font = "bold 25px sans-serif";
-        }
+			canvas = _canvas.getContext('2d');
+			
+			_buffer = document.createElement('canvas');
+			_buffer.width = _canvas.width;
+			_buffer.height = _canvas.height;
+			buffer = _buffer.getContext('2d');
+			
+			buffer.strokeStyle = "rgb(255, 255, 255)";
+			buffer.fillStyle = "rgb(255, 255, 255)";
+			buffer.font = "bold 25px sans-serif";
+		}
 		maxX = _buffer.width/gridPixel;
 		maxY = _buffer.height/gridPixel;
 		unitGrid = new Array(maxX, maxY);
